@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Significant Earthquakes from 1965 to 2016</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin="" />
+    <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?...">
+</script>
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+    integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+    crossorigin=""></script>
+    
+
+
+
+  <style>
+    .modebar{
+      display: none !important;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .range-slider {
+      width: 100%;
+      padding: 30px;
+    }
+
+    .range-slider .range-values {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      color: #888888;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 15px;
+    }
+
+    .rangeslider {
+      margin: 4px auto;
+      position: relative;
+    }
+
+    .rangeslider.rangeslider--horizontal {
+      height: 3px;
+      background-color: #e5e5e5;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .rangeslider.rangeslider--horizontal.rangeslider--active .rangeslider__handle {
+      background-color: #ffefb3;
+    }
+
+    .rangeslider .rangeslider__fill {
+      height: 3px;
+      background-color: #ffca00;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .rangeslider .rangeslider__handle {
+      width: 16px;
+      height: 16px;
+      border: 3px solid #ffca00;
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: -7px;
+      box-shadow: 0 0 0 2px rgba(255, 202, 0, 0.2);
+    }
+
+    output {
+      display: block;
+      margin-bottom: 5px;
+      padding: 0;
+      text-align: center;
+      color: #080808;
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 400;
+    }
+
+    output .output {
+      margin-right: 3px;
+      font-size: 14px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+  
+
+    <div class="col-md-12" id="header">
+      <h1><i>Significant Earthquakes from 1965 to 2016</i></h1>
+      <p>By Adrianne, Ashkan, Steve and Wills </p>
+    </div>
+
+    <div class="col-md-6 range-slider">
+        <output class="text range-output output">1965-2016 <span class="text  output"></span>
+          <span class="text-bold"></span>
+        </output>
+        <input type="range" min="1965" max="2016" step="1" value="1" />
+    </div>
+
+    <div class="column">
+      <div class="col-md-6 long" id="map"></div>
+      <div class="row">
+        <div class="col-md-5" id="scatter"></div>
+        
+      </div>
+      
+    </div>
+   
+    <hr>
+
+    
+
+
+
+    <h2>Gutenberg–Richter law:</h2>
+    <p>The Gutenberg–Richter law describes the relation between the frequency and magnitude of earthquakes. </p>
+    <div class="col-md-4" >
+    <label for="uname"
+               style="color:black"> 
+            <b>Enter Magnitude</b> 
+        </label> 
+  
+        <input 
+               id="input" 
+               placeholder="5.0"
+               > 
+  
+  
+        <button type="button"
+                onclick="geeks()"> 
+            Predict 
+        </button> 
+
+       
+
+        <p id="output"> </p>
+      
+    </div>
+    <div class="col-md-4" id="bar"></div>
+
+
+
+
+   
+  
+
+
+  </div>
+
+  <script> 
+      function geeks() { 
+        var mag= document.getElementById( 
+                  "input").value;
+          // d3.select(".output").remove();
+          console.log(mag)
+          var res=Math.pow(10,9.36654-1.03129*(mag))/(2016-1965);
+          if(res>=1){
+          document.getElementById( 
+                  "output").innerHTML =  
+                  `${res.toFixed(1)} times a year`; 
+          }else{
+            document.getElementById( 
+                  "output").innerHTML =  
+                  `once every ${(1/res).toFixed(1)} years `; 
+          }
+      } 
+  </script> 
+
+ 
+   <!-- Slider -->
+   <script src="../static/js/jquery.min.js"></script>
+   <script src="../static/js/rangeslider.min.js"></script>
+   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <script src="../static/js/app.js"></script>
+   <script type="text/javascript" src="../static/js/app.js"></script>
+   <!-- API key -->
+  <script type="text/javascript" src="../static/js/config.js"></script>
+
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="../static/js/aaa.js"></script>
+  <script type="text/javascript" src="../static/js/logic.js"></script>
+
+</body>
+
+</html>
